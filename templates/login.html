@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>login</title>
+</head>
+<body>
+<form method="post" action="login">
+	<!--handles a logging for admin to add,delete or modify articles-->
+	{% raw xsrf_form_html() %}
+	Hello user,please enter your login details<br/><br/><br/>
+	emailid:<input type="text" name="loginemail"><br/>
+	password:<input type="password" name="loginpassword"><br/>
+	<input type ="submit">
+</form>
+</body>
+</html>

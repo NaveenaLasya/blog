@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>register</title>
+</head>
+<body>
+<form method="post" action='register'>
+	{% raw xsrf_form_html() %}
+	<!--handles a registration for admin-->
+	<h1>You are now on register page<h1>
+	<p>
+		Name:<input type="text" name="registername"><br/>
+		Emailid:<input type="text" name="registeremail"><br/>
+		Password:<input type="password" name="registerpassword"><br/>
+	<input type="submit">
+</body>
+</html>

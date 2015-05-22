@@ -5,10 +5,14 @@ import motor
 
 from tornado import gen
 
+
+
 #extends get current user
 class BaseHandler(tornado.web.RequestHandler):
-	#overrides get current user
 	def get_current_user(self):
+		"""
+		overrides get current user
+		"""
 		email=self.get_secure_cookie('email')
 		if email:
 			users_coll=self.application.db1.users
@@ -17,11 +21,18 @@ class BaseHandler(tornado.web.RequestHandler):
 				return user
 
 
-#Handles / 
-class IndexHandler(tornado.web.RequestHandler):
-	#display list of articles
+
+#Handles /
+class IndexHandler(BaseHandler):
 	def get(self):
-		self.write("no articles sry")
+		"""
+		display list of articles
+		"""
+		user = self.current_user
+		if user:
+			self.render('index.html',admin=True)
+		else:
+			self.render('index.html',admin=False)
 
 
 
