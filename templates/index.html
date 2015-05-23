@@ -1,13 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title></title>
-</head>
-<body>
+{% extends basic.html %}
+{% block content %}
 	<h1>no articles yet</h1>
 	<!--for checking if login person is admin or not-->
 	{% if admin==True %}
 		<a href="/admin">admin</a>
 	{% end %}
-</body>
-</html>
+{% end %}

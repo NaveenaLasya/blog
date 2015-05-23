@@ -38,16 +38,19 @@ class CreateArticleHandler(BaseHandler):
 	@tornado.web.asynchronous
 	@gen.coroutine
 	def post(self):
-		articles_coll = self.application.db.articles 
+		articles_coll = self.application.db.articles
+		articleauthor = self.get_argument("articleauthor") 
 		articlename = self.get_argument("articlename")
 		articledescription = self.get_argument("articledescription")
 		article = dict()
+		article['author'] = articleauthor
 		article['name'] = articlename
 		article['description'] = articledescription
 
 		yield articles_coll.insert(article)
-		#self.render('admin.html',articlename=articlename,articledescription=articledescription)
-		self.write("u ve created an article")
+		self.render('createarticle.html',articlename=articlename,articledescription=articledescription,articleauthor=articleauthor)
+		#self.write("u ve created an article")
+
 
 
 class ReadArticleHandler(BaseHandler):

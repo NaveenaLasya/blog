@@ -1,17 +1,38 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>register</title>
-</head>
-<body>
-<form method="post" action='register'>
+{% extends basic.html %}
+{% block content %}
+<h1>
+			Register 
+</h1>
+<form class="form-horizontal" method="post" action='register' >
 	{% raw xsrf_form_html() %}
 	<!--handles a registration for admin-->
-	<h1>You are now on register page<h1>
-	<p>
-		Name:<input type="text" name="registername"><br/>
-		Emailid:<input type="text" name="registeremail"><br/>
-		Password:<input type="password" name="registerpassword"><br/>
-	<input type="submit">
-</body>
-</html>
+	
+			
+	
+	<div class="form-group">
+	    <label for="registername" class="col-sm-2 control-label">Name</label>
+	    <div class="col-sm-10">
+	      <input type="name" class="form-control" name="registername" style="width:300px"  placeholder="Name">
+	    </div>
+	</div>
+	<div class="form-group">
+	    <label for="registeremail" class="col-sm-2 control-label">Email</label>
+	    <div class="col-sm-10">
+	      <input type="email" class="form-control" name="registeremail" style="width:300px" placeholder="Email">
+	    </div>
+	</div>
+	<div class="form-group">
+	    <label for="registerpassword" class="col-sm-2 control-label">Password</label>
+	    <div class="col-sm-10">
+	      <input type="password" class="form-control" name="registerpassword" style="width:300px" placeholder="Password">
+	    </div>
+	  </div>
+  
+
+	</div>
+	  <div class="form-group">
+	    <div class="col-sm-offset-2 col-sm-10">
+	      <button type="submit" class="btn btn-default">Submit</button>
+	    </div>
+  </div>
+{% end %}

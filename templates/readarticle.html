@@ -1,14 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>read article</title>
-</head>
-<body>
+{% extends basic.html %}
+{% block content %}
 	{% for article in articles %}
-		<div>
+		<div style="background-color:#ADD8E6;height:200px;width:500px">
 			<h2>{{article['name']}}</h2>
 			<p>{{article['description']}}</p>
 		</div>
 	{% end %}
-</body>
-</html>
+{% end %}

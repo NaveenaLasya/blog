@@ -1,15 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>admin articles</title>
-</head>
-<body>
-      No articles
+{% extends basic.html %}
+{% block content %}
+      <h1>
+      Welcome Admin
+      </h1>
 
-      if u wanna create please click on this link
-      <a href="/createarticle">create</a><br/><br/><br/>
-      if u wanna read
-      <a href="/readarticle">read</a>
+      <h2>Wanna create a material??</h2>
+      <a href="/createarticle"><h3 style="text-align:center;background-color:#ADD8E6;width:70px">create</h3></a><br/><br/>
+      <h2>Wanna read a material</h2>
+      <a href="/readarticle"><h3 style="text-align:center;background-color:#ADD8E6;width:70px">read</a>
+{% end %}
 
-</body>
-</html>
