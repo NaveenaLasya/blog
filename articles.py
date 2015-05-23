@@ -3,11 +3,13 @@ import tornado.web
 import pymongo
 import motor
 import time
+import json
 
 import hashlib
 from Crypto.Hash import SHA256
 
 from tornado import gen
+from bson import json_util
 
 
 #extends get current user
@@ -60,12 +62,12 @@ class ReadArticleHandler(BaseHandler):
 	@gen.coroutine
 	def get(self):
 		articles_coll = self.application.db.articles
-		articles=[]
+		articles={}
 		cursor = articles_coll.find()
 		while (yield cursor.fetch_next):
 			article = cursor.next_object()
-			articles.append(article)
-		self.render('readarticle.html',articles=articles)
+			articles[article['name']]=article
+		self.write(json.dumps(articles,default=json_util.default))
 
 		
 
