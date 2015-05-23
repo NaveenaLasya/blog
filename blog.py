@@ -9,6 +9,7 @@ import tornado.web
 
 import pages
 import profile
+import articles
 
 from tornado.options import define,options
 define("port",default=8000,help="port addr",type=int)
@@ -23,6 +24,9 @@ class Application(tornado.web.Application):
 		(r'/',pages.IndexHandler),
 		(r'/register',profile.RegisterHandler),
 		(r'/login',profile.LoginHandler),
+		(r'/admin',articles.AdminHandler),
+		(r'/createarticle',articles.CreateArticleHandler),
+		(r'/readarticle',articles.ReadArticleHandler),
 		(r'/logout',profile.LogoutHandler)
 				]
 		settings=dict(
