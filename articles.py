@@ -2,6 +2,7 @@ import tornado.web
 
 import pymongo
 import motor
+import time
 
 import hashlib
 from Crypto.Hash import SHA256
@@ -46,7 +47,7 @@ class CreateArticleHandler(BaseHandler):
 		article['author'] = articleauthor
 		article['name'] = articlename
 		article['description'] = articledescription
-
+		article['time'] = time.time()
 		yield articles_coll.insert(article)
 		self.render('createarticle.html',articlename=articlename,articledescription=articledescription,articleauthor=articleauthor)
 		#self.write("u ve created an article")
