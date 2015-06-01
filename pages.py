@@ -27,7 +27,6 @@ class BaseHandler(tornado.web.RequestHandler):
 
 #Handles /
 class IndexHandler(BaseHandler):
-	@tornado.web.authenticated
 	@tornado.web.asynchronous
 	@gen.coroutine
 	def get(self):
