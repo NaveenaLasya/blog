@@ -2,8 +2,11 @@ import tornado.web
 
 import pymongo
 import motor
+import time
+import json
 
 from tornado import gen
+from bson import json_util
 
 
 
@@ -24,15 +27,25 @@ class BaseHandler(tornado.web.RequestHandler):
 
 #Handles /
 class IndexHandler(BaseHandler):
+	@tornado.web.authenticated
+	@tornado.web.asynchronous
+	@gen.coroutine
 	def get(self):
 		"""
 		display list of articles
 		"""
-		user = self.current_user
-		if user:
-			self.render('index.html',admin=True)
-		else:
-			self.render('index.html',admin=False)
+		#user = self.current_user
+		#if user:
+		#	self.render('admin.html',admin=True)
+		#else:
+		articles_coll = self.application.db.articles
+		articles={}
+		cursor = articles_coll.find()
+		while (yield cursor.fetch_next):
+			article = cursor.next_object()
+			articles[article['name']]=article
+		self.write(json.dumps(articles,default=json_util.default))
+			#self.render('index.html',admin=False)
 
 
 

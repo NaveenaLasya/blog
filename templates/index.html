@@ -1,8 +1,16 @@
 {% extends basic.html %}
 {% block content %}
-	<h1>no articles yet</h1>
-	<!--for checking if login person is admin or not-->
+	<h1>Hey check out are the articles</h1>
+	{% for article in articles %}
+		<div style="background-color:#ADD8E6;height:200px;width:500px">
+			<h2>{{article['author']}}</h2>
+			<h2>{{article['name']}}</h2>
+			<p>{{article['description']}}</p>
+		</div>
+	{% end %}
 	{% if admin==True %}
 		<a href="/admin">admin</a>
 	{% end %}
 {% end %}
+
+
