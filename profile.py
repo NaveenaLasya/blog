@@ -29,7 +29,7 @@ class RegisterHandler(BaseHandler):
 	"""
 		for registration of admins
 	"""
-	@tornado.web.authenticated
+	#@tornado.web.authenticated
 	def get(self):
 		self.render('register.html')
 
