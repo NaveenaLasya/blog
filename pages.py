@@ -41,20 +41,19 @@ class IndexHandler(BaseHandler):
 		#	self.render('admin.html',admin=True)
 		#else:
 		articles_coll = self.application.db.articles
-		articles={}
+		articles=[]
 		cursor = articles_coll.find()
-		i=1
 		while (yield cursor.fetch_next):
 			article = cursor.next_object()
 			art_obj = dict()
 			art_obj['title']=article['name']
-			art_obj['body']=article['description']
+			art_obj['body']=tornado.escape.xhtml_escape(article['description'])
 			art_obj['published']=article['time']
 			art_obj['author']=article['author']
-			articles[i] = art_obj
-			i+=1
+			articles.append(art_obj)
 		
-		self.write(articles)
+		final_articles = {"artcles":articles}
+		self.write(tornado.escape.json_encode(final_articles))
 			#self.render('index.html',admin=False)
 
 
