@@ -23,6 +23,9 @@ class BaseHandler(tornado.web.RequestHandler):
 			if user:
 				return user
 
+	def set_default_headers(self):
+		self.set_header("Access-Control-Allow-Origin","*")
+
 
 
 #Handles /
@@ -40,10 +43,18 @@ class IndexHandler(BaseHandler):
 		articles_coll = self.application.db.articles
 		articles={}
 		cursor = articles_coll.find()
+		i=1
 		while (yield cursor.fetch_next):
 			article = cursor.next_object()
-			articles[article['name']]=article
-		self.write(json.dumps(articles,default=json_util.default))
+			art_obj = dict()
+			art_obj['title']=article['name']
+			art_obj['body']=article['description']
+			art_obj['published']=article['time']
+			art_obj['author']=article['author']
+			articles[i] = art_obj
+			i+=1
+		
+		self.write(articles)
 			#self.render('index.html',admin=False)
 
 

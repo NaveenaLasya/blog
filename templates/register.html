@@ -1,4 +1,7 @@
 {% extends basic.html %}
+{% block css %}
+s
+{% end %}
 {% block content %}
 <h1>
 			Register 
@@ -8,22 +11,23 @@
 	<!--handles a registration for admin-->
 	
 	<div class="form-group">
-		<label for="registername" class="col-sm-2 control-label">Name</label>
+		<label for="registername" class="col-sm-2 control-label"><h6>Name</h6></label>
 		<div class="col-sm-10">
 			<input type="name" class="form-control" name="registername" style="width:300px" placeholder="Name">
 		</div>			
 	</div>
 
 
+
 	<div class="form-group">
-		<label for="registeremail" class="col-sm-2 control-label">Email</label>
+		<label for="registeremail" class="col-sm-2 control-label"><h6>Email</h6></label>
 		<div class="col-sm-10">
 			<input type="email" class="form-control" name="registeremail" style="width:300px" placeholder="Email">
 		</div>
 	</div>
 	
 	<div class="form-group">
-		<label for="registerpassword" class="col-sm-2 control-label">Password</label>
+		<label for="registerpassword" class="col-sm-2 control-label"><h6>Password</h6></label>
 		<div class="col-sm-10">
 			<input type="password" class="form-control" name="registerpassword" style="width:300px" placeholder="Password">
 		</div>
