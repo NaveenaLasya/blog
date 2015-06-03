@@ -52,7 +52,7 @@ class IndexHandler(BaseHandler):
 			art_obj['author']=article['author']
 			articles.append(art_obj)
 		
-		final_articles = {"artcles":articles}
+		final_articles = {"articles":articles}
 		self.write(tornado.escape.json_encode(final_articles))
 			#self.render('index.html',admin=False)
 
