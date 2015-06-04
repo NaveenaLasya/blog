@@ -27,11 +27,12 @@ class BaseHandler(tornado.web.RequestHandler):
 # handles registration of users
 class RegisterHandler(BaseHandler):
 	"""
-		for registration of admins
+		Handles registration of admins
 	"""
-	#@tornado.web.authenticated
+
 	def get(self):
 		self.render('register.html')
+
 
 	@tornado.web.asynchronous
 	@gen.coroutine
@@ -55,7 +56,7 @@ class RegisterHandler(BaseHandler):
 #handles for admin login
 class LoginHandler(BaseHandler):
 	"""
-		handles logginf for admins
+		handles login for admins
 	"""
 	def get(self):
 		self.render('login.html')

@@ -26,6 +26,9 @@ class BaseHandler(tornado.web.RequestHandler):
 				return user
 
 class AdminHandler(BaseHandler):
+	"""
+		Welcome page for admin
+	"""
 	@tornado.web.authenticated
 	def get(self):
 		self.render('admin.html')
@@ -33,6 +36,9 @@ class AdminHandler(BaseHandler):
 			
 
 class CreateArticleHandler(BaseHandler):
+	"""
+		For creating an article
+	"""
 	@tornado.web.authenticated
 	def get(self):
 		self.render('createarticle.html')
@@ -57,6 +63,9 @@ class CreateArticleHandler(BaseHandler):
 
 
 class ReadArticleHandler(BaseHandler):
+	"""
+		Reading articles
+	"""
 	@tornado.web.authenticated
 	@tornado.web.asynchronous
 	@gen.coroutine

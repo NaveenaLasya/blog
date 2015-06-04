@@ -1,17 +1,24 @@
 {% extends basic.html %}
+{% block css %}
+    <link rel="stylesheet" href="{{static_url('css/sample.css')}}"/>
+	<script src="{{static_url('js/ckeditor.js')}}"></script>
+	<script src="{{static_url('js/config.js')}}"></script>
+	<script src="{{static_url('js/style.js')}}"></script>
+	<script src="{{static_url('js/skins/moono/editor.css')}}"></script>
+	<script src="{{static_url('js/lang/en.js')}}"></script>
+{% end %}
 {% block content %}
-
-  
-  
+ 
  <form action="createarticle" method="post"> 
  	{% raw xsrf_form_html() %}
       <div class="form-group">
-	    <label for="articleauthor" class="col-sm-2 control-label">Article Suthor</label>
+	    <label for="articleauthor" class="col-sm-2 control-label">Article Author</label>
 	    <div class="col-sm-10">
 	      <input type="name" class="form-control" name="articleauthor" style="width:300px" placeholder="Authorname">
 	    </div>
 	  </div>
-	</br></br></br>
+	  </br></br></br>
+
 
 	  <div class="form-group">
 	    <label for="articlename" class="col-sm-2 control-label">Article Name</label>
@@ -19,17 +26,19 @@
 	      <input type="name" class="form-control" name="articlename" style="width:300px" placeholder="Articlename">
 	    </div>
 	  </div>
-	</br></br></br></br></br>
+	  </br></br></br></br></br>
     
+	  
 	  <div>
       		<textarea class="ckeditor" cols="80" id="articledescription" name="articledescription" rows="10">
-        		
-      		</textarea>
+        	</textarea>
       </div>
+      <br/><br/>
 
-     <p>
-      		<input type="submit" value="Submit">
-     </p>
+      
+      <p>
+      		<input type="submit" value="Submit" >
+      </p>
 
   </form>
 {% end %}
