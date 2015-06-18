@@ -6,7 +6,7 @@ import tornado.httpserver
 import tornado.ioloop
 import tornado.options
 import tornado.web
-import date
+from datetime import date
 
 import pages
 import profile

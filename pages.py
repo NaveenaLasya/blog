@@ -76,11 +76,12 @@ class IndexHandler(BaseHandler):
 		"""
 		key = 'blog'
 		
-		final_articles= mc.get(key)
+		final_articles = mc.get(key)
+		print "articles printed"
 
 
 		
-		if(final_articles is None or IndexHandler.i==0):
+		if (not final_articles or IndexHandler.i==0):
 			articles_coll = self.application.db.articles
 			logging.error("hello")
 			articles=[]
@@ -98,9 +99,10 @@ class IndexHandler(BaseHandler):
 				articles.append(art_obj)
 				final_articles = {"articles":articles}
 				IndexHandler.Cache=final_articles
-			#print final_articles
-			self.write(tornado.escape.json_encode(final_articles))
-			mc.set(key,final_articles)
+			print "accessed db"
+			mc.set(key,final_articles)		
+		self.write(tornado.escape.json_encode(final_articles))
+		
 		
 
 

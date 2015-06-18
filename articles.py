@@ -53,6 +53,7 @@ class CreateArticleHandler(BaseHandler):
 	@gen.coroutine
 	def post(self):
 		pages.IndexHandler.i=0
+		print pages.IndexHandler.i
 		articles_coll = self.application.db.articles
 		articleauthor = self.get_argument("articleauthor") 
 		articlename = self.get_argument("articlename")
