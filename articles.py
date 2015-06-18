@@ -3,13 +3,18 @@ import tornado.web
 import pymongo
 import motor
 import time
+import datetime
 import json
+
+
+import pages
 
 import hashlib
 from Crypto.Hash import SHA256
 
 from tornado import gen
 from bson import json_util
+from time import strftime
 
 
 #extends get current user
@@ -47,6 +52,7 @@ class CreateArticleHandler(BaseHandler):
 	@tornado.web.asynchronous
 	@gen.coroutine
 	def post(self):
+		pages.IndexHandler.i=0
 		articles_coll = self.application.db.articles
 		articleauthor = self.get_argument("articleauthor") 
 		articlename = self.get_argument("articlename")
@@ -56,6 +62,7 @@ class CreateArticleHandler(BaseHandler):
 		article['name'] = articlename
 		article['description'] = articledescription
 		article['time'] = time.time()
+		article['date'] = strftime("%d/%m/%Y")
 		yield articles_coll.insert(article)
 		self.render('createarticle.html',articlename=articlename,articledescription=articledescription,articleauthor=articleauthor)
 		#self.write("u ve created an article")

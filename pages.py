@@ -4,9 +4,14 @@ import pymongo
 import motor
 import time
 import json
+import logging
 
 from tornado import gen
 from bson import json_util
+
+import memcache
+mc = memcache.Client(['0.0.0.0:11211'],debug=1)
+
 
 
 
@@ -27,35 +32,76 @@ class BaseHandler(tornado.web.RequestHandler):
 		self.set_header("Access-Control-Allow-Origin","*")
 
 
+def get_articles():
+
+	MONGODB_URI = "mongodb://first:first@ds031872.mongolab.com:31872/first"
+	client1=pymongo.MongoClient(MONGODB_URI)
+	client=motor.MotorClient(MONGODB_URI)
+	db1=client1.first
+	db=client.first
+	articles_coll = db.articles
+	articles=[]
+	cursor = articles_coll.find()
+	while (yield cursor.fetch_next):
+		article = cursor.next_object()
+		#print article
+		art_obj = dict()
+		art_obj['title']=article['name']
+		art_obj['body']=tornado.escape.xhtml_escape(article['description'])
+		art_obj['published']=article['time']
+			# art_obj['publisheddate']=article['date']
+		art_obj['author']=article['author']
+		articles.append(art_obj)
+		final_articles = {"articles":articles}
+		yield final_articles
+		#yield articles
+		
+		
+
 
 #Handles /
+
+
 class IndexHandler(BaseHandler):
+	i=0
+	Cache=dict()
+
 	@tornado.web.asynchronous
 	@gen.coroutine
+	
+
 	def get(self):
 		"""
 		display list of articles
 		"""
-		#user = self.current_user
-		#if user:
-		#	self.render('admin.html',admin=True)
-		#else:
-		articles_coll = self.application.db.articles
-		articles=[]
-		cursor = articles_coll.find()
-		while (yield cursor.fetch_next):
-			article = cursor.next_object()
-			art_obj = dict()
-			art_obj['title']=article['name']
-			art_obj['body']=tornado.escape.xhtml_escape(article['description'])
-			art_obj['published']=article['time']
-			art_obj['author']=article['author']
-			articles.append(art_obj)
+		key = 'blog'
 		
-		final_articles = {"articles":articles}
-		self.write(tornado.escape.json_encode(final_articles))
-			#self.render('index.html',admin=False)
+		final_articles= mc.get(key)
 
+
+		
+		if(final_articles is None or IndexHandler.i==0):
+			articles_coll = self.application.db.articles
+			logging.error("hello")
+			articles=[]
+			cursor = articles_coll.find()
+			IndexHandler.i=1
+			while (yield cursor.fetch_next):
+				article = cursor.next_object()
+					#print article
+				art_obj = dict()
+				art_obj['title']=article['name']
+				art_obj['body']=tornado.escape.xhtml_escape(article['description'])
+				art_obj['published']=article['time']
+					# art_obj['publisheddate']=article['date']
+				art_obj['author']=article['author']
+				articles.append(art_obj)
+				final_articles = {"articles":articles}
+				IndexHandler.Cache=final_articles
+			#print final_articles
+			self.write(tornado.escape.json_encode(final_articles))
+			mc.set(key,final_articles)
+		
 
 
 
