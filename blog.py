@@ -27,8 +27,10 @@ class Application(tornado.web.Application):
 		(r'/login',profile.LoginHandler),
 		(r'/admin',articles.AdminHandler),
 		(r'/createarticle',articles.CreateArticleHandler),
+		(r'/android_login',profile.AndroidLoginHandler),
 		(r'/readarticle',articles.ReadArticleHandler),
-		(r'/logout',profile.LogoutHandler)
+		(r'/logout',profile.LogoutHandler),
+		(r'/.*',profile.ErrorHandler)
 				]
 		settings=dict(
 			template_path=os.path.join(os.path.dirname(__file__),"templates"),

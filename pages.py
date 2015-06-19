@@ -63,9 +63,7 @@ def get_articles():
 
 
 class IndexHandler(BaseHandler):
-	i=0
-	Cache=dict()
-
+	i=1
 	@tornado.web.asynchronous
 	@gen.coroutine
 	
@@ -74,36 +72,39 @@ class IndexHandler(BaseHandler):
 		"""
 		display list of articles
 		"""
-		key = 'blog'
-		
-		final_articles = mc.get(key)
-		print "articles printed"
-
-
-		
-		if (not final_articles or IndexHandler.i==0):
-			articles_coll = self.application.db.articles
-			logging.error("hello")
-			articles=[]
-			cursor = articles_coll.find()
-			IndexHandler.i=1
-			while (yield cursor.fetch_next):
-				article = cursor.next_object()
-					#print article
-				art_obj = dict()
-				art_obj['title']=article['name']
-				art_obj['body']=tornado.escape.xhtml_escape(article['description'])
-				art_obj['published']=article['time']
-					# art_obj['publisheddate']=article['date']
-				art_obj['author']=article['author']
-				articles.append(art_obj)
-				final_articles = {"articles":articles}
-				IndexHandler.Cache=final_articles
-			print "accessed db"
-			mc.set(key,final_articles)		
+		final_articles=farticles(self)
+		print"helooo"
 		self.write(tornado.escape.json_encode(final_articles))
 		
-		
+def farticles(self):
+	key = 'blog_index'
+	print "byee"
+	final_articles= dict()
+	
+	articles = memcache.get(key)
+	#if articles is None or IndexHandler.i==0:
+		#articles_coll = self.application.db.articles
+		#logging.error("hello")
+		#articles=[]
+		#cursor = articles_coll.find()
+		#IndexHandler.i=1
+		#while (yield cursor.fetch_next):
+		#	article = cursor.next_object()
+	#			#print article
+	#		art_obj = dict()
+	#		art_obj['title']=article['name']
+	#		art_obj['body']=tornado.escape.xhtml_escape(article['description'])
+	#		art_obj['published']=article['time']
+	#		art_obj['author']=article['author']
+	#		articles.append(art_obj)
+	#		final_articles = {"articles":articles}
+	#		print final_articles
+	#		
+	#	print "accessed db"
+	#	mc.set(key,final_articles)
+
+	#yield final_articles	
+
 
 
 
