@@ -5,6 +5,7 @@ import motor
 import time
 import datetime
 import json
+import pages
 
 
 import pages
@@ -59,8 +60,6 @@ class CreateArticleHandler(BaseHandler):
 	@tornado.web.asynchronous
 	@gen.coroutine
 	def post(self):
-		pages.IndexHandler.update=True
-		
 		articles_coll = self.application.db.articles
 		articleauthor = self.get_argument("articleauthor") 
 		articlename = self.get_argument("articlename")
@@ -72,9 +71,13 @@ class CreateArticleHandler(BaseHandler):
 		article['time'] = time.time()
 		article['date'] = strftime("%d/%m/%Y")
 		yield articles_coll.insert(article)
-		self.render('createarticle.html',articlename=articlename,articledescription=articledescription,articleauthor=articleauthor)
-		#self.write("u ve created an article")
-
+		key= 'blog'
+ 		d=self.application.db1
+ 		a=pages.ar()
+ 		up=True
+ 		final_articles = a.fdarticles(d,key,up)
+		self.render('createarticle.html')
+		
 
 
 class ReadArticleHandler(BaseHandler):
@@ -123,7 +126,6 @@ class ApiArticleHandler(BaseHandler):
 	 		a=ar()
 	 		final_articles = a.fdarticles(d,key,ApiArticleHandler.update)
 	 		self.write(tornado.escape.json_encode(final_articles))
- 		
  	
 class ar():
 	def fdarticles(s,db,key,update):

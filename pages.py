@@ -105,18 +105,21 @@ class IndexHandler(BaseHandler):
 
 
 class artsHandler(BaseHandler):
-	update = False
 	@tornado.web.asynchronous
  	@gen.coroutine
  	def get(self):
  		key= 'blog'
  		d=self.application.db1
  		a=ar()
- 		final_articles = a.fdarticles(d,key,artsHandler.update)
+ 		up=False
+ 		
+ 		final_articles = a.fdarticles(d,key,up)
  		self.write(tornado.escape.json_encode(final_articles))
+ 	
  		
  	
 class ar():
+	
 	def fdarticles(s,db,key,update):
 		final_articles= mc.get(key)
 		if update or final_articles==None:
@@ -131,10 +134,17 @@ class ar():
 				art_obj['author']=article['author']
 				articles.append(art_obj)
 				final_articles = {"articles":articles}
+				a=ar()
+				u=a.update_change(False)
 			mc.set(key,final_articles)
+			print "u poked me"
 		return final_articles
 
-
+	def update_change(s,value):
+		if value==False:
+			return False
+		else:
+			return True
 
 
 
