@@ -52,8 +52,8 @@ class CreateArticleHandler(BaseHandler):
 	@tornado.web.asynchronous
 	@gen.coroutine
 	def post(self):
-		pages.IndexHandler.i=0
-		print pages.IndexHandler.i
+		pages.IndexHandler.update=True
+		
 		articles_coll = self.application.db.articles
 		articleauthor = self.get_argument("articleauthor") 
 		articlename = self.get_argument("articlename")

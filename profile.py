@@ -71,16 +71,9 @@ class AndroidLoginHandler(BaseHandler):
 				currentusername=currentuser['name']
 				self.set_secure_cookie("email",loginemail)
 				user_details=dict()
-				
-				
-				#id1=data['_id']
-				#id2=id1[id1.keys()[0]]
 				user_details['token'] = currentuser['token']
 				user_details['email'] = currentuser['email']
-				user_details['Success'] = "True"
-				
-				
-				
+				user_details['Success'] = "1"
 			else:
 				user_details['message'] = "username"
 				user_details['Success'] = "False"

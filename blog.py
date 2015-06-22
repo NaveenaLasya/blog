@@ -23,6 +23,7 @@ class Application(tornado.web.Application):
 	def __init__(self):
 		handlers=[
 		(r'/',pages.IndexHandler),
+		(r'/arts',pages.artsHandler),
 		(r'/register',profile.RegisterHandler),
 		(r'/login',profile.LoginHandler),
 		(r'/admin',articles.AdminHandler),

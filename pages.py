@@ -13,9 +13,9 @@ import memcache
 mc = memcache.Client(['0.0.0.0:11211'],debug=1)
 
 
+MONGODB_URI = "mongodb://first:first@ds031872.mongolab.com:31872/first"
 
 
-#extends get current user
 class BaseHandler(tornado.web.RequestHandler):
 	def get_current_user(self):
 		"""
@@ -67,43 +67,73 @@ class IndexHandler(BaseHandler):
 	@tornado.web.asynchronous
 	@gen.coroutine
 	
+	
 
 	def get(self):
 		"""
 		display list of articles
 		"""
-		final_articles=farticles(self)
-		print"helooo"
-		self.write(tornado.escape.json_encode(final_articles))
-		
-def farticles(self):
-	key = 'blog_index'
-	print "byee"
-	final_articles= dict()
+		key = 'blog'
 	
-	articles = memcache.get(key)
-	#if articles is None or IndexHandler.i==0:
-		#articles_coll = self.application.db.articles
-		#logging.error("hello")
-		#articles=[]
-		#cursor = articles_coll.find()
-		#IndexHandler.i=1
-		#while (yield cursor.fetch_next):
-		#	article = cursor.next_object()
-	#			#print article
-	#		art_obj = dict()
-	#		art_obj['title']=article['name']
-	#		art_obj['body']=tornado.escape.xhtml_escape(article['description'])
-	#		art_obj['published']=article['time']
-	#		art_obj['author']=article['author']
-	#		articles.append(art_obj)
-	#		final_articles = {"articles":articles}
-	#		print final_articles
-	#		
-	#	print "accessed db"
-	#	mc.set(key,final_articles)
+		final_articles = mc.get(key)
+		print "articles printed"
 
-	#yield final_articles	
+
+		
+		if (not final_articles or IndexHandler.i==0):
+			articles_coll = self.application.db.articles
+			logging.error("hello")
+			articles=[]
+			cursor = articles_coll.find()
+			print cursor
+			IndexHandler.i=1
+			while (yield cursor.fetch_next):
+				article = cursor.next_object()
+					#print article
+				art_obj = dict()
+				art_obj['title']=article['name']
+				art_obj['body']=tornado.escape.xhtml_escape(article['description'])
+				art_obj['published']=article['time']
+					# art_obj['publisheddate']=article['date']
+				art_obj['author']=article['author']
+				articles.append(art_obj)
+				final_articles = {"articles":articles}
+				IndexHandler.Cache=final_articles
+			print "accessed db"
+			mc.set(key,final_articles)		
+		self.write(tornado.escape.json_encode(final_articles))
+
+
+class artsHandler(BaseHandler):
+	update = False
+	@tornado.web.asynchronous
+ 	@gen.coroutine
+ 	def get(self):
+ 		key= 'blog'
+ 		d=self.application.db1
+ 		a=ar()
+ 		final_articles = a.fdarticles(d,key,artsHandler.update)
+ 		self.write(tornado.escape.json_encode(final_articles))
+ 		
+ 	
+class ar():
+	def fdarticles(s,db,key,update):
+		final_articles= mc.get(key)
+		if update and final_articles==None:
+			logging.error("hello")
+			mc.set(key,final_articles)
+			articles=[]
+			for article in db.articles.find():
+				art_obj = dict()
+				art_obj['title']=article['name']
+				art_obj['body']=tornado.escape.xhtml_escape(article['description'])
+				art_obj['published']=article['time']
+				art_obj['author']=article['author']
+				articles.append(art_obj)
+				final_articles = {"articles":articles}
+			mc.set(key,final_articles)
+		return final_articles
+
 
 
 
