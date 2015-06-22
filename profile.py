@@ -73,7 +73,7 @@ class AndroidLoginHandler(BaseHandler):
 				user_details=dict()
 				user_details['token'] = currentuser['token']
 				user_details['email'] = currentuser['email']
-				user_details['Success'] = "1"
+				user_details['Success'] = "True"
 			else:
 				user_details['message'] = "username"
 				user_details['Success'] = "False"

@@ -16,6 +16,13 @@ from tornado import gen
 from bson import json_util
 from time import strftime
 
+import memcache
+mc = memcache.Client(['0.0.0.0:11211'],debug=1)
+
+
+MONGODB_URI = "mongodb://first:first@ds031872.mongolab.com:31872/first"
+
+
 
 #extends get current user
 class BaseHandler(tornado.web.RequestHandler):
@@ -86,7 +93,55 @@ class ReadArticleHandler(BaseHandler):
 			articles[article['name']]=article
 		self.write(json.dumps(articles,default=json_util.default))
 
-		
+class ApiArticleHandler(BaseHandler):
+	update = False
+	@tornado.web.asynchronous
+ 	@gen.coroutine
+ 	def get(self):
+ 		user_details=dict()
+		users_coll = self.application.db.users 
+		logintoken=self.get_argument("logintoken")
+		#currentuser=yield users_coll.find_one({'logintok':logintoken})
+		# if currentuser: 
+		# 	loginpassword=SHA256.new(loginpassword).hexdigest()
+		# 	if loginpassword==currentuser['password']:
+		# 		currentusername=currentuser['name']
+		# 		self.set_secure_cookie("email",loginemail)
+		# 		user_details=dict()
+		# 		user_details['token'] = currentuser['token']
+		# 		user_details['email'] = currentuser['email']
+		# 		user_details['Success'] = "1"
+		# 	else:
+		# 		user_details['message'] = "username"
+		# 		user_details['Success'] = "False"
+		# 	self.write(json.loads(json_util.dumps(user_details)))	
+		# else:
+		# 	self.write("please register")
+		if logintoken:
+	 		key= 'blog'
+	 		d=self.application.db1
+	 		a=ar()
+	 		final_articles = a.fdarticles(d,key,ApiArticleHandler.update)
+	 		self.write(tornado.escape.json_encode(final_articles))
+ 		
+ 	
+class ar():
+	def fdarticles(s,db,key,update):
+		final_articles= mc.get(key)
+		if update and final_articles==None:
+			logging.error("hello")
+			mc.set(key,final_articles)
+			articles=[]
+			for article in db.articles.find():
+				art_obj = dict()
+				art_obj['title']=article['name']
+				art_obj['body']=tornado.escape.xhtml_escape(article['description'])
+				art_obj['published']=article['time']
+				art_obj['author']=article['author']
+				articles.append(art_obj)
+				final_articles = {"articles":articles}
+			mc.set(key,final_articles)
+		return final_articles	
 
 	
 

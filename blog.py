@@ -30,6 +30,7 @@ class Application(tornado.web.Application):
 		(r'/createarticle',articles.CreateArticleHandler),
 		(r'/android_login',profile.AndroidLoginHandler),
 		(r'/readarticle',articles.ReadArticleHandler),
+		(r'/api',articles.ApiArticleHandler),
 		(r'/logout',profile.LogoutHandler),
 		(r'/.*',profile.ErrorHandler)
 				]
