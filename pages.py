@@ -119,7 +119,7 @@ class artsHandler(BaseHandler):
 class ar():
 	def fdarticles(s,db,key,update):
 		final_articles= mc.get(key)
-		if update and final_articles==None:
+		if update or final_articles==None:
 			logging.error("hello")
 			mc.set(key,final_articles)
 			articles=[]
