@@ -139,7 +139,7 @@ class ApiArticleHandler(tornado.web.RequestHandler):
 		if logintoken:
 			# re = self.request('https://localhost:8000/api?logintoken="DSf"')
 			# print re
-			header= self.request.headers.get('Authentication')
+			header= self.request.headers.get('Accept-Language')
 
 			print "failed"
 			token={"header":header}
