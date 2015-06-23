@@ -145,6 +145,8 @@ class ApiArticleHandler(tornado.web.RequestHandler):
 			print header
 			self.write(token)
 	 		key= 'blog'
+	 		# h=self.get_default_headers(self.get_header("Access-Control-Allow-Origin"))
+	 		# print h
 
 	 		# d=self.application.db1
 	 		# a=pages.ar()
@@ -152,6 +154,9 @@ class ApiArticleHandler(tornado.web.RequestHandler):
 	 		# self.write(tornado.escape.json_encode(final_articles))
 	def set_default_headers(self):
 		self.set_header("Access-Control-Allow-Origin","*")
+		self.set_header("Access-Control-Allow-Headers","*")
+		self.set_header("Access-Control-Allow-Methods","*")
+
 
 
 
