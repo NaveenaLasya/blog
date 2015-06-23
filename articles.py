@@ -126,9 +126,10 @@ class ApiArticleHandler(BaseHandler):
 		if logintoken:
 	 		key= 'blog'
 	 		d=self.application.db1
-	 		a=ar()
+	 		a=pages.ar()
 	 		final_articles = a.fdarticles(d,key,ApiArticleHandler.update)
 	 		self.write(tornado.escape.json_encode(final_articles))
+	 	#hey hello dis is navena
 
 
 
