@@ -38,6 +38,9 @@ class BaseHandler(tornado.web.RequestHandler):
 			if user:
 				return user
 
+	def set_default_headers(self):
+		self.set_header("Access-Control-Allow-Origin","*")
+
 class AdminHandler(BaseHandler):
 	"""
 		Welcome page for admin
