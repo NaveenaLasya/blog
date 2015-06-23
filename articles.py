@@ -129,30 +129,27 @@ class ApiArticleHandler(BaseHandler):
 	 		a=pages.ar()
 	 		final_articles = a.fdarticles(d,key,ApiArticleHandler.update)
 	 		self.write(tornado.escape.json_encode(final_articles))
-	 	#hey hello dis is navena
-
-
 
 
 
  	
-class ar():
-	def fdarticles(s,db,key,update):
-		final_articles= mc.get(key)
-		if update and final_articles==None:
-			logging.error("hello")
-			mc.set(key,final_articles)
-			articles=[]
-			for article in db.articles.find():
-				art_obj = dict()
-				art_obj['title']=article['name']
-				art_obj['body']=tornado.escape.xhtml_escape(article['description'])
-				art_obj['published']=article['time']
-				art_obj['author']=article['author']
-				articles.append(art_obj)
-				final_articles = {"articles":articles}
-			mc.set(key,final_articles)
-		return final_articles	
+# class ar():
+# 	def fdarticles(s,db,key,update):
+# 		final_articles= mc.get(key)
+# 		if update and final_articles==None:
+# 			logging.error("hello")
+# 			mc.set(key,final_articles)
+# 			articles=[]
+# 			for article in db.articles.find():
+# 				art_obj = dict()
+# 				art_obj['title']=article['name']
+# 				art_obj['body']=tornado.escape.xhtml_escape(article['description'])
+# 				art_obj['published']=article['time']
+# 				art_obj['author']=article['author']
+# 				articles.append(art_obj)
+# 				final_articles = {"articles":articles}
+# 			mc.set(key,final_articles)
+# 		return final_articles	
 
 	
 
