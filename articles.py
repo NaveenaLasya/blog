@@ -104,8 +104,8 @@ class ApiArticleHandler(BaseHandler):
 	@tornado.web.asynchronous
  	@gen.coroutine
  	def get(self):
- 		user_details=dict()
-		users_coll = self.application.db.users 
+ 		#user_details=dict()
+		#users_coll = self.application.db.users 
 		logintoken=self.get_argument("logintoken")
 		#currentuser=yield users_coll.find_one({'logintok':logintoken})
 		# if currentuser: 

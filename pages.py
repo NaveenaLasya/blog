@@ -79,9 +79,6 @@ class IndexHandler(BaseHandler):
 	
 		final_articles = mc.get(key)
 		print "articles printed"
-
-
-		
 		if (not final_articles or IndexHandler.i==0):
 			articles_coll = self.application.db.articles
 			logging.error("hello")
@@ -124,7 +121,7 @@ class ar():
 	
 	def fdarticles(s,db,key,update):
 		final_articles= mc1.get(key)
-		if update or final_articles==None:
+		if(update or not final_articles):
 			logging.error("hello")
 			mc.set(key,final_articles)
 			articles=[]
