@@ -150,6 +150,9 @@ class ApiArticleHandler(tornado.web.RequestHandler):
 	 		# a=pages.ar()
 	 		# final_articles = a.fdarticles(d,key,ApiArticleHandler.update)
 	 		# self.write(tornado.escape.json_encode(final_articles))
+	def set_default_headers(self):
+		self.set_header("Access-Control-Allow-Origin","*")
+
 
 
 
