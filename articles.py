@@ -12,10 +12,11 @@ import pages
 
 import hashlib
 from Crypto.Hash import SHA256
-
+# from httpclient import HttpRequest
 from tornado import gen
 from bson import json_util
 from time import strftime
+import jwt
 
 import memcache
 mc = memcache.Client(['0.0.0.0:11211'],debug=1)
@@ -37,6 +38,17 @@ class BaseHandler(tornado.web.RequestHandler):
 			user=users_coll.find_one({'email':email})
 			if user:
 				return user
+		# print "success"
+		# token= self.request.headers.get('version','')
+		# #token =self.get_argument("logintoken")
+		# print token 
+		#user, _, pwd= base64.decodestring(token).partition(':')
+		# email =jwt.decode(token, 'cookie_secret', algorithms=['HS256'])
+		# if email:
+		# 	users_coll=self.application.db1.users
+		# 	user=users_coll.find_one({'email':email})
+		# 	if user:
+		# 		return user
 
 	def set_default_headers(self):
 		self.set_header("Access-Control-Allow-Origin","*")
@@ -101,6 +113,7 @@ class ReadArticleHandler(BaseHandler):
 
 class ApiArticleHandler(BaseHandler):
 	update = False
+	
 	@tornado.web.asynchronous
  	@gen.coroutine
  	def get(self):
@@ -124,33 +137,26 @@ class ApiArticleHandler(BaseHandler):
 		# else:
 		# 	self.write("please register")
 		if logintoken:
+			header= self.request.headers.get('Authentication')
+			print "failed"
+			token={"header":header}
+			self.write(token)
 	 		key= 'blog'
-	 		d=self.application.db1
-	 		a=pages.ar()
-	 		final_articles = a.fdarticles(d,key,ApiArticleHandler.update)
-	 		self.write(tornado.escape.json_encode(final_articles))
+
+	 		# d=self.application.db1
+	 		# a=pages.ar()
+	 		# final_articles = a.fdarticles(d,key,ApiArticleHandler.update)
+	 		# self.write(tornado.escape.json_encode(final_articles))
 
 
 
- 	
-# class ar():
-# 	def fdarticles(s,db,key,update):
-# 		final_articles= mc.get(key)
-# 		if update and final_articles==None:
-# 			logging.error("hello")
-# 			mc.set(key,final_articles)
-# 			articles=[]
-# 			for article in db.articles.find():
-# 				art_obj = dict()
-# 				art_obj['title']=article['name']
-# 				art_obj['body']=tornado.escape.xhtml_escape(article['description'])
-# 				art_obj['published']=article['time']
-# 				art_obj['author']=article['author']
-# 				articles.append(art_obj)
-# 				final_articles = {"articles":articles}
-# 			mc.set(key,final_articles)
-# 		return final_articles	
 
+
+
+# class HeaderHandler(tornado.httpclient.HTTPRequest):
+# 	def get(self):
+# 		data = HttpRequest.META
+# 		self.write(data)
 	
 
 	
