@@ -24,6 +24,8 @@ class BaseHandler(tornado.web.RequestHandler):
 			user=users_coll.find_one({'email':email})
 			if user:
 				return user
+	def set_default_headers(self):
+		self.set_header("Access-Control-Allow-Origin","*")
 
 
 
