@@ -129,6 +129,11 @@ class ApiArticleHandler(BaseHandler):
 	 		a=ar()
 	 		final_articles = a.fdarticles(d,key,ApiArticleHandler.update)
 	 		self.write(tornado.escape.json_encode(final_articles))
+
+
+
+
+
  	
 class ar():
 	def fdarticles(s,db,key,update):

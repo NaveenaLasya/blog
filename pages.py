@@ -120,7 +120,7 @@ class artsHandler(BaseHandler):
 class ar():
 	
 	def fdarticles(s,db,key,update):
-		final_articles= mc1.get(key)
+		final_articles= mc.get(key)
 		if(update or not final_articles):
 			logging.error("hello")
 			mc.set(key,final_articles)
@@ -135,7 +135,7 @@ class ar():
 				final_articles = {"articles":articles}
 				a=ar()
 				u=a.update_change(False)
-			mc1.set(key,final_articles)
+			mc.set(key,final_articles)
 			print "u poked me"
 		return final_articles
 
