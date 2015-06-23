@@ -140,6 +140,7 @@ class ApiArticleHandler(tornado.web.RequestHandler):
 			# re = self.request('https://localhost:8000/api?logintoken="DSf"')
 			# print re
 			header= self.request.headers.get('Accept-Language')
+
 			print "failed"
 			token={"header":header}
 			print header
@@ -155,7 +156,7 @@ class ApiArticleHandler(tornado.web.RequestHandler):
 	def set_default_headers(self):
 		self.set_header("Access-Control-Allow-Origin","*")
 		self.set_header("Access-Control-Allow-Headers","*")
-		self.set_header("Access-Control-Allow-Methods","*")
+		self.set_header("Access-Control-Allow-Methods","GET,OPTIONS")
 
 
 
