@@ -111,7 +111,7 @@ class ReadArticleHandler(BaseHandler):
 			articles[article['name']]=article
 		self.write(json.dumps(articles,default=json_util.default))
 
-class ApiArticleHandler(BaseHandler):
+class ApiArticleHandler(tornado.web.RequestHandler):
 	update = False
 	
 	@tornado.web.asynchronous
@@ -137,9 +137,12 @@ class ApiArticleHandler(BaseHandler):
 		# else:
 		# 	self.write("please register")
 		if logintoken:
-			header= self.request.headers.get('Authentication')
+			# re = self.request('https://localhost:8000/api?logintoken="DSf"')
+			# print re
+			header= self.request.headers.get('Accept-Language')
 			print "failed"
 			token={"header":header}
+			print header
 			self.write(token)
 	 		key= 'blog'
 
