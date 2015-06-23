@@ -82,6 +82,36 @@ class AndroidLoginHandler(BaseHandler):
 			self.write("please register")
 
 
+class ApiLoginHandler(BaseHandler):
+	@tornado.web.asynchronous
+	@gen.coroutine	
+	def get(self):
+		#self.render('login.html')
+		# #user_details=dict()
+		# users_coll = self.application.db.users 
+		# loginemail=self.get_argument("loginemail")
+		# loginpassword=self.get_argument("loginpassword")
+		# currentuser=yield users_coll.find_one({'email':loginemail,})
+		# if currentuser: 
+		# 	loginpassword=SHA256.new(loginpassword).hexdigest()
+		# 	if loginpassword==currentuser['password']:
+		# 		currentusername=currentuser['name']
+		# 		self.set_secure_cookie("email",loginemail)
+		# 		user_details=dict()
+		# 		user_details['token'] = currentuser['token']
+		# 		user_details['email'] = currentuser['email']
+		# 		user_details['Success'] = "True"
+		# 	else:
+		# 		user_details['message'] = "username"
+		# 		user_details['Success'] = "False"
+		# 	self.write(json.loads(json_util.dumps(user_details)))	
+		# else:
+		# 	self.write("please register")
+		logintoken = self.get_argument("logintoken")
+		if logintoken:
+			self.write("hey heloo hi")
+
+
 
 
 #handles for admin login
