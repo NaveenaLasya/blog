@@ -11,6 +11,8 @@ from bson import json_util
 
 import memcache
 mc = memcache.Client(['0.0.0.0:11211'],debug=1)
+mc1 = memcache.Client(['0.0.0.0:11211'],debug=1)
+
 
 
 MONGODB_URI = "mongodb://first:first@ds031872.mongolab.com:31872/first"
@@ -121,7 +123,7 @@ class artsHandler(BaseHandler):
 class ar():
 	
 	def fdarticles(s,db,key,update):
-		final_articles= mc.get(key)
+		final_articles= mc1.get(key)
 		if update or final_articles==None:
 			logging.error("hello")
 			mc.set(key,final_articles)
@@ -136,7 +138,7 @@ class ar():
 				final_articles = {"articles":articles}
 				a=ar()
 				u=a.update_change(False)
-			mc.set(key,final_articles)
+			mc1.set(key,final_articles)
 			print "u poked me"
 		return final_articles
 
